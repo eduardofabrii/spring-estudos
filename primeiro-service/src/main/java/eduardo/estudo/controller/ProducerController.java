@@ -39,7 +39,7 @@ public class ProducerController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ProducerGetResponse> listAll(@PathVariable Long id) {
+    public ResponseEntity<ProducerGetResponse> findById(@PathVariable Long id) {
         log.debug("Request to find producer by id: '{}'", id);
 
         var producerGetResponse = Producer.getProducers()
