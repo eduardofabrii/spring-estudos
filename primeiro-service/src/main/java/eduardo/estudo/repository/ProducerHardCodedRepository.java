@@ -18,7 +18,7 @@ public class ProducerHardCodedRepository {
         PRODUCERS.add(Producer.builder().id(3L).nome("Madhouse").createdAt(LocalDateTime.now()).build());
     }
 
-    public static List<Producer> findAll() {
+    public List<Producer> findAll() {
         return ProducerHardCodedRepository.PRODUCERS;
     }
 
