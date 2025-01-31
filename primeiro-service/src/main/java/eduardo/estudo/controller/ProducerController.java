@@ -1,8 +1,11 @@
 package eduardo.estudo.controller;
 
+import eduardo.estudo.domain.Anime;
 import eduardo.estudo.domain.Producer;
 import eduardo.estudo.mapper.ProducerMapper;
+import eduardo.estudo.request.AnimePutRequest;
 import eduardo.estudo.request.ProducerPostRequest;
+import eduardo.estudo.request.ProducerPutRequest;
 import eduardo.estudo.response.ProducerGetResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
@@ -74,6 +77,24 @@ public class ProducerController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found"));
 
         Producer.getProducers().remove(producerToDelete);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> update(@RequestBody ProducerPutRequest producer) {
+        log.debug("Request to delete producer '{}'", producer);
+
+        var producerToRemove = Producer.getProducers()
+                .stream()
+                .filter(anime -> anime.getId().equals(producer.getId()))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found"));
+
+        var producerUpdated = MAPPER.toProducer(producer, producerToRemove.getCreatedAt());
+
+        Producer.getProducers().remove(producerToRemove);
+        Producer.getProducers().add(producerUpdated);
 
         return ResponseEntity.noContent().build();
     }

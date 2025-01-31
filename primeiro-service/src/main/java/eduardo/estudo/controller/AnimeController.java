@@ -91,7 +91,7 @@ public class AnimeController {
                 .stream()
                 .filter(anime -> anime.getId().equals(request.getId()))
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
 
         var animeUpdated = MAPPER.toAnime(request);
 

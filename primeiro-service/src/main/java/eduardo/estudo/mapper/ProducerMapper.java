@@ -2,11 +2,13 @@ package eduardo.estudo.mapper;
 
 import eduardo.estudo.domain.Producer;
 import eduardo.estudo.request.ProducerPostRequest;
+import eduardo.estudo.request.ProducerPutRequest;
 import eduardo.estudo.response.ProducerGetResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -18,6 +20,8 @@ public interface ProducerMapper {
     @Mapping(target = "id", expression = "java(java.util.concurrent.ThreadLocalRandom.current().nextLong(1000))")
 //    Pega de producer do ProducerPostRequest
     Producer toProducer(ProducerPostRequest postRequest);
+
+    Producer toProducer(ProducerPutRequest producer, LocalDateTime createdAt);
 
     ProducerGetResponse toProducerGetResponse(Producer producer);
 
