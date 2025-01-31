@@ -5,6 +5,10 @@ spring:
     virtual:
       enabled: true
 
+logging:
+  level:
+    eduardo.estudo: debug
+
 server:
   servlet:
     context-path: /
