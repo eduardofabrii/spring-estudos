@@ -5,6 +5,7 @@ import eduardo.estudo.domain.Producer;
 import eduardo.estudo.mapper.AnimeMapper;
 import eduardo.estudo.mapper.ProducerMapper;
 import eduardo.estudo.request.AnimePostRequest;
+import eduardo.estudo.request.AnimePutRequest;
 import eduardo.estudo.request.ProducerPostRequest;
 import eduardo.estudo.response.AnimeGetResponse;
 import eduardo.estudo.response.ProducerGetResponse;
@@ -71,13 +72,31 @@ public class AnimeController {
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         log.debug("Request to delete anime by id: '{}'", id);
 
-        var animeDelete = Anime.getAnimes()
+        var animeToDelete = Anime.getAnimes()
                 .stream()
                 .filter(anime -> anime.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found"));
 
-        Anime.getAnimes().remove(animeDelete);
+        Anime.getAnimes().remove(animeToDelete);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> update(@RequestBody AnimePutRequest request) {
+        log.debug("Request to delete anime '{}'", request);
+
+        var animeToRemove = Anime.getAnimes()
+                .stream()
+                .filter(anime -> anime.getId().equals(request.getId()))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found"));
+
+        var animeUpdated = MAPPER.toAnime(request);
+
+        Anime.getAnimes().remove(animeToRemove);
+        Anime.getAnimes().add(animeUpdated);
 
         return ResponseEntity.noContent().build();
     }

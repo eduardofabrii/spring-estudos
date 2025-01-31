@@ -3,6 +3,7 @@ package eduardo.estudo.mapper;
 import eduardo.estudo.domain.Anime;
 import eduardo.estudo.domain.Producer;
 import eduardo.estudo.request.AnimePostRequest;
+import eduardo.estudo.request.AnimePutRequest;
 import eduardo.estudo.request.ProducerPostRequest;
 import eduardo.estudo.response.AnimeGetResponse;
 import eduardo.estudo.response.ProducerGetResponse;
@@ -22,7 +23,10 @@ public interface AnimeMapper {
 //    Pega de producer do ProducerPostRequest
     Anime toAnime(AnimePostRequest postRequest);
 
+    Anime toAnime(AnimePutRequest request);
+
     AnimeGetResponse toAnimeGetResponse(Anime anime);
 
     List<AnimeGetResponse> toAnimeGetResponseList(List<Anime> animes);
+
 }
