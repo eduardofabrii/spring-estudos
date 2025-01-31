@@ -66,4 +66,19 @@ public class AnimeController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        log.debug("Request to delete anime by id: '{}'", id);
+
+        var animeDelete = Anime.getAnimes()
+                .stream()
+                .filter(anime -> anime.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found"));
+
+        Anime.getAnimes().remove(animeDelete);
+
+        return ResponseEntity.noContent().build();
+    }
 }
