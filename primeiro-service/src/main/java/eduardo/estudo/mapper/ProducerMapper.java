@@ -21,7 +21,7 @@ public interface ProducerMapper {
 //    Pega de producer do ProducerPostRequest
     Producer toProducer(ProducerPostRequest postRequest);
 
-    Producer toProducer(ProducerPutRequest producer, LocalDateTime createdAt);
+    Producer toProducer(ProducerPutRequest producer);
 
     ProducerGetResponse toProducerGetResponse(Producer producer);
 
