@@ -7,13 +7,10 @@ import eduardo.estudo.response.ProducerGetResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
 @RequestMapping("v1/producers")
@@ -23,20 +20,33 @@ public class ProducerController {
     private static final ProducerMapper MAPPER = ProducerMapper.INSTANCE;
 
     @GetMapping
-    public List<Producer> listAll(@RequestParam(required = false) String name) {
-        var producers = Producer.getProducers();
+    public ResponseEntity<List<ProducerGetResponse>> listAll(@RequestParam(required = false) String name) {
+        log.debug("Request received to list all producers, param name: '{}'", name);
 
-        if (name == null) return producers;
-        return producers.stream().filter(producer -> producer.getNome().equals(name)).toList();
+        var producers = Producer.getProducers();
+        List<ProducerGetResponse> producerGetResponseList = MAPPER.toProducerGetResponseList(producers);
+
+        if (name == null) return ResponseEntity.ok(producerGetResponseList);
+
+        var response = producerGetResponseList.stream().filter(producer -> producer.getNome().equalsIgnoreCase(name)).toList();
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("{id}")
-    public Producer listAll(@PathVariable Long id) {
-        return Producer.getProducers()
+    public ResponseEntity<ProducerGetResponse> listAll(@PathVariable Long id) {
+        log.debug("Request to find producer by id: '{}'", id);
+
+        var producerGetResponse = Producer.getProducers()
                 .stream()
                 .filter(producer -> producer.getId().equals(id))
-                .findFirst().orElse(null);
+                .findFirst()
+                .map(MAPPER::toProducerGetResponse)
+                .orElse(null);
+
+        return ResponseEntity.ok(producerGetResponse);
     }
+
 
     @PostMapping(headers = "x-api-key")
     public ResponseEntity<ProducerGetResponse> save(@RequestBody ProducerPostRequest producerPostRequest,
