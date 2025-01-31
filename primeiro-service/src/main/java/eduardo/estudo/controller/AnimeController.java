@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -49,7 +50,7 @@ public class AnimeController {
                 .filter(anime -> anime.getId().equals(id))
                 .findFirst()
                 .map(MAPPER::toAnimeGetResponse)
-                .orElse(null);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found"));
 
         return ResponseEntity.ok(animeGetResponse);
     }
