@@ -4,6 +4,7 @@ import eduardo.estudo.domain.Producer;
 import eduardo.estudo.request.ProducerPostRequest;
 import eduardo.estudo.request.ProducerPutRequest;
 import eduardo.estudo.response.ProducerGetResponse;
+import eduardo.estudo.response.ProducerPostResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -24,6 +25,8 @@ public interface ProducerMapper {
     Producer toProducer(ProducerPutRequest producer);
 
     ProducerGetResponse toProducerGetResponse(Producer producer);
+
+    ProducerPostResponse toProducerPostResponse(Producer producerSaved);
 
     List<ProducerGetResponse> toProducerGetResponseList(List<Producer> producers);
 }

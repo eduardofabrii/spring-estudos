@@ -7,6 +7,7 @@ import eduardo.estudo.request.AnimePutRequest;
 import eduardo.estudo.request.ProducerPostRequest;
 import eduardo.estudo.request.ProducerPutRequest;
 import eduardo.estudo.response.ProducerGetResponse;
+import eduardo.estudo.response.ProducerPostResponse;
 import eduardo.estudo.service.ProducerService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
@@ -53,15 +54,15 @@ public class ProducerController {
 
 
     @PostMapping(headers = "x-api-key")
-    public ResponseEntity<ProducerGetResponse> save(@RequestBody ProducerPostRequest producerPostRequest,
-                                                    @RequestHeader HttpHeaders headers) {
+    public ResponseEntity<ProducerPostResponse> save(@RequestBody ProducerPostRequest producerPostRequest,
+                                                     @RequestHeader HttpHeaders headers) {
         log.info("{}" + headers);
 
         var producer = MAPPER.toProducer(producerPostRequest);
         Producer producerSaved = service.save(producer);
-        var producerGetResponse = MAPPER.toProducerGetResponse(producerSaved);
+        var producerPostResponse = MAPPER.toProducerPostResponse(producerSaved);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(producerGetResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(producerPostResponse);
     }
 
     @DeleteMapping("{id}")
