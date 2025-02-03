@@ -1,6 +1,10 @@
 package eduardo.estudo.repository;
 
 import eduardo.estudo.domain.Producer;
+import external.dependency.Connection;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,8 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
+@Log4j2
 public class ProducerHardCodedRepository {
     private static final List<Producer> PRODUCERS = new ArrayList<>();
+    private final Connection connection;
 
     static {
         PRODUCERS.add(Producer.builder().id(1L).nome("Mappa").createdAt(LocalDateTime.now()).build());
@@ -29,6 +36,7 @@ public class ProducerHardCodedRepository {
     }
 
     public List<Producer> findByNome(String nome) {
+        log.debug(connection);
         return PRODUCERS.stream().filter(producer -> producer.getNome().equalsIgnoreCase(nome)).toList();
     }
 
