@@ -2,6 +2,7 @@ package eduardo.estudo.repository;
 
 import eduardo.estudo.domain.Producer;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class ProducerHardCodedRepository {
     private static final List<Producer> PRODUCERS = new ArrayList<>();
 

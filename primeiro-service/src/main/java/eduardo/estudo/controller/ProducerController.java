@@ -9,6 +9,7 @@ import eduardo.estudo.request.ProducerPutRequest;
 import eduardo.estudo.response.ProducerGetResponse;
 import eduardo.estudo.response.ProducerPostResponse;
 import eduardo.estudo.service.ProducerService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpHeaders;
@@ -22,15 +23,11 @@ import java.util.List;
 @RestController
 @RequestMapping("v1/producers")
 @Slf4j
+@RequiredArgsConstructor
 public class ProducerController {
 
-
     private static final ProducerMapper MAPPER = ProducerMapper.INSTANCE;
-    private ProducerService service;
-
-    public ProducerController() {
-        this.service = new ProducerService();
-    }
+    private final ProducerService service;
 
     @GetMapping
     public ResponseEntity<List<ProducerGetResponse>> listAll(@RequestParam(required = false) String name) {
