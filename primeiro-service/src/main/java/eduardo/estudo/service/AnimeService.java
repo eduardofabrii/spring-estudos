@@ -2,18 +2,18 @@ package eduardo.estudo.service;
 
 import eduardo.estudo.domain.Anime;
 import eduardo.estudo.repository.AnimeHardCodedRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class AnimeService {
 
-    private AnimeHardCodedRepository repository;
-
-    public AnimeService() {
-        this.repository = new AnimeHardCodedRepository();
-    }
+    private final AnimeHardCodedRepository repository;
 
     public List<Anime> findAll(String name) {
         return name == null ? repository.findAll() : repository.findByNome(name);
