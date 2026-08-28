@@ -1,2 +1,8 @@
-## Estudos de Spring Boot
-Estudando Spring Boot com @DevDojo
+# Spring - Estudos
+
+Monorepo de estudos de Spring Boot.
+
+## Tecnologias
+
+- Java
+- Spring Boot
